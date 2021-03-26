@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:background="?android:attr/selectableItemBackground"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/color_picker_title"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textSize="17sp"
+        android:ellipsize="marquee"
+        android:fadingEdge="horizontal"
+        android:layout_column="0" />
+
+    <ImageView
+        android:id="@+id/color_picker_info"
+        android:src="@drawable/ic_info"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:contentDescription="@string/info"
+        android:layout_width="@dimen/cpv_color_preference_normal"
+        android:layout_height="@dimen/cpv_color_preference_normal"
+        android:layout_column="1"
+        android:layout_gravity="end"
+        android:layout_marginEnd="8dp"
+        android:focusable="true"
+        android:clickable="true"
+        android:visibility="gone" />
+
+    <com.jaredrummler.android.colorpicker.ColorPanelView
+        android:id="@+id/color_picker_preview"
+        android:layout_height="@dimen/cpv_color_preference_normal"
+        android:layout_width="@dimen/cpv_color_preference_normal"
+        android:layout_column="2"
+        app:cpv_colorShape="circle" />
+</GridLayout>

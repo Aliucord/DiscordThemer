@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="simple_accent_color">#ff7289da</color>
+    <color name="simple_bg_color">#ff36393f</color>
+    <color name="simple_bg_secondary_color">#ff2f3136</color>
+    <color name="input_background_color">#ff202225</color>
+    <color name="statusbar_color">@color/input_background_color</color>
+    <color name="active_channel_color">#ff42464d</color>
+    <color name="mention_highlight">#1afaa61a</color>
+</resources>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_discord"
+        android:icon="@drawable/ic_discord"
+        android:title="@string/support_server"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_reset"
+        android:title="@string/reset_settings"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_save"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/save_settings"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_load"
+        android:title="@string/load_settings"
+        app:showAsAction="never" />
+</menu>
