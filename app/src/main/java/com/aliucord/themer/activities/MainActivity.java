@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (shouldAskForStorage()) checkPermissions();
         prefs = getSharedPreferences(BuildConfig.APPLICATION_ID + "_preferences", Context.MODE_WORLD_READABLE);
 
         getSupportFragmentManager().beginTransaction().add(R.id.settings_layout, settingsFragment).commit();
@@ -156,6 +157,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isXposedModuleEnabled() { return getResources().getBoolean(R.bool.xposed); }
+
+    private boolean shouldAskForStorage() { return false; }
 
     private boolean checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

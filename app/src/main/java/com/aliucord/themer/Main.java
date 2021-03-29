@@ -25,8 +25,7 @@ public class Main implements IXposedHookInitPackageResources, IXposedHookLoadPac
         if (packageName.equals(BuildConfig.APPLICATION_ID)) res.setReplacement(R.bool.xposed, true);
         if (!packageName.equals("com.discord") && !packageName.startsWith("com.cutthecord")) return;
 
-        XSharedPreferences prefs = new XSharedPreferences(BuildConfig.APPLICATION_ID);
-        prefs.makeWorldReadable();
+        XSharedPreferences prefs = NCompat.getPrefs();
 
         boolean advanced = prefs.getBoolean("__advanced", false);
         if (advanced && prefs.getBoolean("__disabled", false)) return;
@@ -88,10 +87,13 @@ public class Main implements IXposedHookInitPackageResources, IXposedHookLoadPac
 
     @Override
     public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) {
+        ClassLoader cl = lpparam.classLoader;
         String packageName = lpparam.packageName;
+        if (packageName.equals(BuildConfig.APPLICATION_ID)) try {
+            NCompat.hookSharedPreferences(cl);
+        } catch (Throwable e) { logError(e); }
         if (!packageName.equals("com.discord") && !packageName.equals("com.aliucord") && !packageName.startsWith("com.cutthecord")) return;
 
-        ClassLoader cl = lpparam.classLoader;
         XSharedPreferences prefs = new XSharedPreferences(BuildConfig.APPLICATION_ID);
         prefs.makeWorldReadable();
 
