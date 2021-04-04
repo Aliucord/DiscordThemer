@@ -43,6 +43,8 @@ public class ReplaceAttrs {
             put("primary_700", new ColorEntry("color_primary_700", simplebgs));
             put("primary_900", new ColorEntry("color_primary_900", "__"));
             put("theme_chat_mentioned_me", new ColorEntry("mention_highlight"));
+            put("theme_chat_spoiler_bg", new ColorEntry("color_primary_700", simplebgs));
+            put("theme_chat_spoiler_inapp_bg", new ColorEntry("color_primary_600", simplebg));
 
             for (String n : new String[]{"600", "660", "800"})
                 put("primary_" + n, new ColorEntry("color_primary_" + n, simplebg));

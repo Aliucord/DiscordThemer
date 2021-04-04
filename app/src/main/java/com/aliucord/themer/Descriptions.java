@@ -18,7 +18,7 @@ public class Descriptions {
         String bg = "One of background colors";
         put("primary_630", bg);
         put("primary_660", bg);
-        put("primary_700", "One of background colors (used for example for embeds)");
+        put("primary_700", "One of background colors (used for example for embeds and spoilers)");
         put("primary_800", bg);
         put("primary_dark_600", "One of background colors (colorBackgroundPrimary)");
         put("primary_dark_630", "One of background colors (used for example for channels list background)");
