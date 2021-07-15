@@ -1,3 +1,5 @@
+### Important: Simple mode in Themer currently doesn't support latest versions of Discord, fix will be dispatched soon!
+
 # DiscordThemer
 Xposed module that allows you to change colors in Discord. Requires enabled Resource Hooks in EdXposed / LSPosed Manager settings.
 
