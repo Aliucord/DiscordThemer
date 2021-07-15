@@ -3,6 +3,8 @@ package com.aliucord.themer;
 import java.util.HashMap;
 import java.util.Map;
 
+// TODO: Update them to match latest Discord version, and as well, add more descriptions.
+
 public class Descriptions {
     public static Map<String, String> colors = new HashMap<String, String>(){{
         String accent = "Accent color";

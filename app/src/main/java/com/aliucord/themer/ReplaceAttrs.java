@@ -33,6 +33,8 @@ public class ReplaceAttrs {
             String simplea = "simple_accent_color";
             String simplebg = "simple_bg_color";
             String simplebgs = "simple_bg_secondary_color";
+            put("color_brand", new ColorEntry("color_brand_new", simplea));
+            put("colorControlBrandForeground", new ColorEntry("color_brand_360", simplea));
             put("colorSurface", new ColorEntry("color_primary_dark_800", simplebg));
             put("colorBackgroundFloating", new ColorEntry("color_primary_dark_800", simplebg));
             put("colorTabsBackground", new ColorEntry("color_primary_dark_800", simplebg));
@@ -42,6 +44,8 @@ public class ReplaceAttrs {
             put("colorTextLink", new ColorEntry("color_link", simplea));
             put("primary_700", new ColorEntry("color_primary_700", simplebgs));
             put("primary_900", new ColorEntry("color_primary_900", "__"));
+            put("theme_chat_mention_background", new ColorEntry("color_brand_500_alpha_20", "__alpha_10_" + simplea));
+            put("theme_chat_mention_foreground", new ColorEntry("color_brand_new_530", simplea));
             put("theme_chat_mentioned_me", new ColorEntry("mention_highlight"));
             put("theme_chat_spoiler_bg", new ColorEntry("color_primary_700", simplebgs));
             put("theme_chat_spoiler_inapp_bg", new ColorEntry("color_primary_600", simplebg));
@@ -64,8 +68,12 @@ public class ReplaceAttrs {
     public ReplaceAttrs(Resources res, String packageName, SharedPreferences prefs) {
         for (Map.Entry<String, ColorEntry> entry : getRawMap().entrySet()) {
             String color = entry.getValue().simple;
-            if (!color.equals("__") && prefs.contains(color))
-                map.put(res.getIdentifier(entry.getKey(), "attr", packageName), prefs.getInt(color, Color.BLACK));
+            boolean a10 = color.startsWith("__alpha_10_");
+            if (a10) color = color.replace("__alpha_10_", "");
+            if (!color.equals("__") && prefs.contains(color)) {
+                int c = prefs.getInt(color, Color.BLACK);
+                map.put(res.getIdentifier(entry.getKey(), "attr", packageName), a10 ? Main.getColorWithAlpha("1a", c) : c);
+            }
         }
     }
 

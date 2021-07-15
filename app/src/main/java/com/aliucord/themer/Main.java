@@ -56,7 +56,6 @@ public class Main implements IXposedHookInitPackageResources, IXposedHookLoadPac
             if (prefs.contains("simple_accent_color")) {
                 int accent = prefs.getInt("simple_accent_color", res.getColor(res.getIdentifier("brand", "color", packageName)));
                 replaceAllColors(res, packageName, Constants.ACCENT_NAMES, accent);
-                res.setReplacement(packageName, "color", "purple_brand_alpha_10", getColorWithAlpha("1a", accent));
 
                 fixNitroIcon(res, packageName, accent);
             }
@@ -172,7 +171,7 @@ public class Main implements IXposedHookInitPackageResources, IXposedHookLoadPac
         } catch (Throwable e) { logError(e); }
     }
 
-    private int getColorWithAlpha(String hexAlpha, int color) {
+    public static int getColorWithAlpha(String hexAlpha, int color) {
         return Color.parseColor("#" + hexAlpha + Integer.toHexString(color).substring(2));
     }
 

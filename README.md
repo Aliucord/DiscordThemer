@@ -1,5 +1,3 @@
-### Important: Simple mode in Themer currently doesn't support latest versions of Discord, fix will be dispatched soon!
-
 # DiscordThemer
 Xposed module that allows you to change colors in Discord. Requires enabled Resource Hooks in EdXposed / LSPosed Manager settings.
 
@@ -10,6 +8,11 @@ If you don't use [LSPosed](https://github.com/LSPosed/LSPosed) you may need to r
 [Support Server](https://discord.gg/EsNDvBaHVU)
 
 ### TODO
+- Rewrite module to kotlin and ui to jetpack compose
+- Updater
+- More fixes for latests versions
+- Revert rebrand theme
+- Update descriptions for advanced mode to match latest version of Discord
 - Customize more things than colors
 
 ### Screenshots
