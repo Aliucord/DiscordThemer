@@ -4,16 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/settings_layout"
     tools:context=".activities.MainActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/settings_layout"
+        android:layout_weight="1"
+        android:orientation="vertical" />
     <TextView
         android:id="@+id/error_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        android:textAlignment="center"
         android:text="@string/xposed_not_detected"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:background="@android:color/holo_orange_light"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        tools:ignore="RtlCompat" />
 </LinearLayout>

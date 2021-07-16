@@ -26,7 +26,7 @@
     <string name="statusbar_color">Status bar color</string>
     <string name="support_server">Support Server</string>
     <string name="tested_on">Tested on: 84.1 - Alpha</string>
-    <string name="xposed_not_detected">Xposed module isn\'t enabled or resource hooks in xposed settings, if you enabled them, try to reboot your device</string>
+    <string name="xposed_not_detected">PREVIEW MODE: Xposed module isn\'t enabled or resource hooks in xposed settings, if you enabled them, try to reboot your device.\n\nYou can use this app to create themes for Themer plugin only in this state.</string>
 
     <string-array name="scope">
         <item>com.aliucord</item>

@@ -9,8 +9,8 @@ android {
         applicationId = "com.aliucord.themer"
         minSdk = 21
         targetSdk = 30
-        versionCode = 3
-        versionName = "0.0.3-rc2"
+        versionCode = 4
+        versionName = "0.0.3"
     }
 
     buildTypes {

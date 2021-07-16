@@ -52,15 +52,17 @@ public class MainActivity extends AppCompatActivity {
         boolean xposedEnabled = isXposedModuleEnabled();
         boolean discordInstalled = isPackageInstalled(pm, "com.discord") || isPackageInstalled(pm, "com.aliucord");
         if (!xposedEnabled || !discordInstalled) {
-            error = true;
             TextView errorView = findViewById(R.id.error_view);
-            if (xposedEnabled) errorView.setText(R.string.install_discord);
             errorView.setVisibility(View.VISIBLE);
-            return;
+            if (xposedEnabled) {
+                error = true;
+                errorView.setText(R.string.install_discord);
+                return;
+            }
         }
 
         if (shouldAskForStorage()) checkPermissions();
-        prefs = getSharedPreferences(BuildConfig.APPLICATION_ID + "_preferences", Context.MODE_WORLD_READABLE);
+        prefs = getSharedPreferences(BuildConfig.APPLICATION_ID + "_preferences", xposedEnabled ? Context.MODE_WORLD_READABLE : Context.MODE_PRIVATE);
 
         getSupportFragmentManager().beginTransaction().add(R.id.settings_layout, settingsFragment).commit();
     }
