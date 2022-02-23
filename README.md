@@ -8,12 +8,14 @@ If you don't use [LSPosed](https://github.com/LSPosed/LSPosed) you may need to r
 [Support Server](https://discord.gg/EsNDvBaHVU)
 
 ### TODO
-- Rewrite module to kotlin and ui to jetpack compose
-- Updater
-- More fixes for latests versions
-- Revert rebrand theme
-- Update descriptions for advanced mode to match latest version of Discord
-- Customize more things than colors
+- [x] Rewrite module to kotlin and ui to jetpack compose
+- [ ] Use material you
+- [ ] Updater
+- [ ] More fixes for latest versions
+- [ ] Implement descriptions for colors in advanced mode editor
+- [ ] Customize more things than colors
+- [ ] Implement new theme format
+- [ ] Update screenshots
 
 ### Screenshots
 <img src="assets/Screenshot_1.png" height="400"></img>
