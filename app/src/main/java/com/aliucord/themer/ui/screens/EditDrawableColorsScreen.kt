@@ -11,38 +11,35 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.NavController
 import com.aliucord.themer.R
 import com.aliucord.themer.ui.components.SaveButton
 import com.aliucord.themer.ui.components.SearchBar
 import com.aliucord.themer.utils.ThemeManager
 import com.aliucord.themer.utils.Utils
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 import dalvik.system.PathClassLoader
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
+@Destination
 @Composable
-fun EditDrawableColorsScreen(navController: NavController, themeIdx: Int, m: Boolean) {
+fun EditDrawableColorsScreen(themeIdx: Int, m: Boolean, resultNavigator: ResultBackNavigator<Boolean>) {
     val theme = ThemeManager.themes[themeIdx]
     val json = theme.json
 
     val modified = remember { mutableStateOf(m) }
-    val modifiedArgs = remember { mutableStateOf(false) }
-    if (modified.value != m && !modifiedArgs.value) {
-        Utils.setRootModified(navController, themeIdx, modified.value)
-        modifiedArgs.value = true
-    }
+    resultNavigator.setResult(modified.value)
 
     val search = remember { mutableStateOf(false) }
     val query = remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { SearchBar(navController, R.string.drawable_colors, search, query) },
+        topBar = { SearchBar(resultNavigator, R.string.drawable_colors, search, query) },
         floatingActionButton = {
             if (modified.value) SaveButton {
                 theme.save()
                 modified.value = false
-                modifiedArgs.value = false
             }
         },
     ) {
@@ -50,16 +47,18 @@ fun EditDrawableColorsScreen(navController: NavController, themeIdx: Int, m: Boo
         var colors by remember { mutableStateOf<List<String>?>(null) }
         var error by remember { mutableStateOf(false) }
 
-        if (colors == null && !error) rememberCoroutineScope { Dispatchers.IO }.launch {
-            try {
-                val pm = ctx.packageManager
-                val discordPkg = Utils.getDiscordPackage(pm)
-                colors = PathClassLoader(pm.getApplicationInfo(discordPkg, 0).sourceDir, null).run {
-                    loadClass("com.lytefast.flexinput.R\$d").declaredFields
-                }.map { it.name }
-            } catch (e: Throwable) {
-                Utils.logError(ctx, "Failed to get colors", e)
-                error = true
+        if (colors == null && !error) LaunchedEffect(false) {
+            launch(Dispatchers.IO) {
+                try {
+                    val pm = ctx.packageManager
+                    val discordPkg = Utils.getDiscordPackage(pm)
+                    colors = PathClassLoader(pm.getApplicationInfo(discordPkg, 0).sourceDir, null).run {
+                        loadClass("com.lytefast.flexinput.R\$e").declaredFields
+                    }.map { it.name }
+                } catch (e: Throwable) {
+                    Utils.logError(ctx, "Failed to get colors", e)
+                    error = true
+                }
             }
         }
 

@@ -4,18 +4,20 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.animation.*
-import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.tween
-import androidx.compose.runtime.*
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.fragment.app.FragmentActivity
-import androidx.navigation.compose.*
 import com.aliucord.themer.*
-import com.aliucord.themer.R
 import com.aliucord.themer.preferences.sharedPreferences
+import com.aliucord.themer.ui.screens.NavGraphs
 import com.aliucord.themer.ui.theme.ThemerTheme
 import com.aliucord.themer.ui.theme.primaryColorDark
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.animations.defaults.RootNavGraphDefaultAnimations
+import com.ramcosta.composedestinations.animations.rememberAnimatedNavHostEngine
 
 class MainActivity : FragmentActivity() {
     @SuppressLint("WorldReadableFiles")
@@ -36,9 +38,7 @@ class MainActivity : FragmentActivity() {
     }
 }
 
-private const val animationDuration = 350
-
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalMaterialNavigationApi::class)
 @Composable
 fun MainActivityLayout() {
     val systemUiController = rememberSystemUiController()
@@ -47,25 +47,10 @@ fun MainActivityLayout() {
         systemUiController.setSystemBarsColor(primaryColorDark)
     }
 
-    val navController = rememberNavController()
-    NavHost(
-        navController,
-        startDestination = Screen.Home.route,
-    ) {
-        for (screen in Screen.SCREENS) {
-            composable(
-                screen.route,
-                arguments = screen.args
-            ) {
-                val navData = NavData(it.arguments, navController)
-                if (it.destination.route != Screen.Home.route) AnimatedVisibility(
-                    visibleState = remember { MutableTransitionState(initialState = false) }.apply { targetState = true },
-                    enter = slideInVertically(tween(animationDuration)) { v -> v / 2 } + fadeIn(animationSpec = tween(animationDuration)),
-                    exit = slideOutVertically(tween(animationDuration)) { v -> v / 2 } + fadeOut(animationSpec = tween(animationDuration)),
-                ) {
-                    screen.content(navData)
-                } else screen.content(navData)
-            }
-        }
-    }
+    DestinationsNavHost(
+        navGraph = NavGraphs.root,
+        engine = rememberAnimatedNavHostEngine(
+            rootDefaultAnimations = RootNavGraphDefaultAnimations.ACCOMPANIST_FADING
+        )
+    )
 }

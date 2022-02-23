@@ -5,30 +5,27 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.aliucord.themer.Constants
 import com.aliucord.themer.R
 import com.aliucord.themer.ui.components.SaveButton
 import com.aliucord.themer.ui.components.ThemerAppBar
 import com.aliucord.themer.utils.ThemeManager
-import com.aliucord.themer.utils.Utils
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 
+@Destination
 @Composable
-fun EditCustomValuesScreen(navController: NavController, themeIdx: Int, m: Boolean) {
+fun EditCustomValuesScreen(themeIdx: Int, m: Boolean, resultNavigator: ResultBackNavigator<Boolean>) {
     val theme = ThemeManager.themes[themeIdx]
     val json = theme.json
 
     val modified = remember { mutableStateOf(m) }
-    val modifiedArgs = remember { mutableStateOf(false) }
-    if (modified.value != m && !modifiedArgs.value) {
-        Utils.setRootModified(navController, themeIdx, modified.value)
-        modifiedArgs.value = true
-    }
+    resultNavigator.setResult(modified.value)
 
     Scaffold(
         topBar = {
             ThemerAppBar(
-                navController = navController,
+                resultNavigator = resultNavigator,
                 title = R.string.custom_values,
                 back = true,
             )
@@ -37,7 +34,6 @@ fun EditCustomValuesScreen(navController: NavController, themeIdx: Int, m: Boole
             if (modified.value) SaveButton {
                 theme.save()
                 modified.value = false
-                modifiedArgs.value = false
             }
         },
     ) {

@@ -10,12 +10,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.aliucord.themer.R
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 
 @Composable
 fun SearchBar(
-    navController: NavController,
+    resultNavigator: ResultBackNavigator<*>,
     title: Int,
     search: MutableState<Boolean>,
     query: MutableState<String>,
@@ -57,7 +57,7 @@ fun SearchBar(
             },
         )
     } else ThemerAppBar(
-        navController = navController,
+        resultNavigator = resultNavigator,
         title = title,
         back = true,
         actions = {

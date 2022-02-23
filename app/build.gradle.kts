@@ -1,9 +1,22 @@
 val accompanistVersion = "0.23.0"
 val composeVersion = "1.1.0"
+val composeDestinationsVersion = "1.3.1-beta"
 
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("com.google.devtools.ksp") version "1.6.10-1.0.3"
+}
+
+kotlin {
+    sourceSets {
+        debug {
+            kotlin.srcDir("build/generated/ksp/debug/kotlin")
+        }
+        release {
+            kotlin.srcDir("build/generated/ksp/release/kotlin")
+        }
+    }
 }
 
 android {
@@ -51,14 +64,17 @@ dependencies {
 
     // compose dependencies
     implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.ui:ui:${composeVersion}")
-    implementation("androidx.compose.ui:ui-tooling-preview:${composeVersion}")
-    implementation("androidx.compose.material:material:${composeVersion}")
-    implementation("androidx.navigation:navigation-compose:2.4.1")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:$composeVersion")
+    implementation("androidx.compose.material:material:$composeVersion")
 
     // accompanist dependencies
-    implementation("com.google.accompanist:accompanist-permissions:${accompanistVersion}")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:${accompanistVersion}")
+    implementation("com.google.accompanist:accompanist-permissions:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
+
+    // navigation
+    implementation("io.github.raamcosta.compose-destinations:animations-core:$composeDestinationsVersion")
+    ksp("io.github.raamcosta.compose-destinations:ksp:$composeDestinationsVersion")
 
     // other dependencies
     compileOnly("de.robv.android.xposed:api:82")

@@ -23,19 +23,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.aliucord.themer.*
 import com.aliucord.themer.R
 import com.aliucord.themer.ui.components.ThemerAppBar
+import com.aliucord.themer.ui.screens.destinations.EditScreenDestination
 import com.aliucord.themer.utils.ThemeManager
 import com.aliucord.themer.utils.Utils
 import com.google.accompanist.permissions.*
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 var hsThemes: MutableState<ArrayList<ThemeManager.Theme>>? = null
 
 @OptIn(ExperimentalPermissionsApi::class)
+@Destination(start = true)
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navigator: DestinationsNavigator) {
     val storagePermissionState = rememberPermissionState(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     var isMenuExpanded by remember { mutableStateOf(false) }
 
@@ -46,7 +49,7 @@ fun HomeScreen(navController: NavController) {
     Scaffold(
         topBar = {
             ThemerAppBar(
-                navController = navController,
+                navigator,
                 title = R.string.app_name,
                 actions = {
                     val context = LocalContext.current
@@ -137,7 +140,7 @@ fun HomeScreen(navController: NavController) {
                             )
                             Row {
                                 if (theme != null) IconButton(
-                                    onClick = { navController.navigate("editor/${it - 1}") },
+                                    onClick = { navigator.navigate(EditScreenDestination(it - 1)) },
                                     modifier = Modifier
                                         .wrapContentSize(Alignment.Center)
                                         .padding(start = 0.dp, top = 2.dp, end = 8.dp, bottom = 2.dp)

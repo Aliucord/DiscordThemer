@@ -6,12 +6,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
 import com.aliucord.themer.ui.theme.primaryColor
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultBackNavigator
 
 @Composable
 fun ThemerAppBar(
-    navController: NavController,
+    navigator: DestinationsNavigator? = null,
+    resultNavigator: ResultBackNavigator<*>? = null,
     title: Int,
     back: Boolean = false,
     actions: @Composable RowScope.() -> Unit = {}
@@ -20,7 +22,9 @@ fun ThemerAppBar(
         title = { Text(stringResource(title)) },
         navigationIcon = if (back) {
             {
-                IconButton(onClick = { navController.popBackStack() }) {
+                IconButton(onClick = {
+                    resultNavigator?.navigateBack() ?: navigator?.popBackStack()
+                }) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = null,

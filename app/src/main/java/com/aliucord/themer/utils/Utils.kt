@@ -11,9 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.appcompat.app.AlertDialog
-import androidx.navigation.NavController
 import com.aliucord.themer.*
-import com.aliucord.themer.ui.Screen
 import org.json.JSONObject
 import org.json.JSONTokener
 import java.io.File
@@ -74,7 +72,7 @@ object Utils {
         Toast.makeText(context, "$msg $e", Toast.LENGTH_LONG).show()
     }
 
-    fun PackageManager.isPackageInstalled(packageName: String) = try {
+    private fun PackageManager.isPackageInstalled(packageName: String) = try {
         getPackageInfo(packageName, 0)
         true
     } catch (ignored: Throwable) {
@@ -82,10 +80,4 @@ object Utils {
     }
 
     fun getDiscordPackage(pm: PackageManager) = if (pm.isPackageInstalled(Constants.ALIUCORD)) Constants.ALIUCORD else Constants.DISCORD
-
-    fun setRootModified(navController: NavController, themeIdx: Int, modified: Boolean) {
-        navController.backQueue
-            .find { it.destination.route == Screen.Editor.route && it.arguments?.getInt(Screen.themeIdx) == themeIdx }
-            ?.arguments?.putBoolean(Screen.m, modified)
-    }
 }

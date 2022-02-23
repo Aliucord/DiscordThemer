@@ -8,13 +8,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.navigation.NavController
+import androidx.navigation.NavBackStackEntry
 import com.aliucord.themer.*
 import com.aliucord.themer.R
 import com.aliucord.themer.preferences.disabledPref
-import com.aliucord.themer.ui.Screen
 import com.aliucord.themer.ui.components.*
+import com.aliucord.themer.ui.screens.destinations.*
 import com.aliucord.themer.utils.ThemeManager
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.ramcosta.composedestinations.result.ResultRecipient
 import org.json.JSONObject
 
 class ColorPickerItemData(
@@ -24,8 +27,17 @@ class ColorPickerItemData(
 )
 
 @OptIn(ExperimentalMaterialApi::class)
+@Destination
 @Composable
-fun EditScreen(navController: NavController, themeIdx: Int, m: Boolean) {
+fun EditScreen(
+    themeIdx: Int,
+    m: Boolean = false,
+    navigator: DestinationsNavigator,
+    backStackEntry: NavBackStackEntry,
+    resultRecipient: ResultRecipient<EditColorsScreenDestination, Boolean>,
+    resultRecipient2: ResultRecipient<EditCustomValuesScreenDestination, Boolean>,
+    resultRecipient3: ResultRecipient<EditDrawableColorsScreenDestination, Boolean>
+) {
     val theme = ThemeManager.themes[themeIdx]
     remember {
         theme.reload()
@@ -34,16 +46,16 @@ fun EditScreen(navController: NavController, themeIdx: Int, m: Boolean) {
     val json = theme.json
 
     val modified = remember { mutableStateOf(m) }
-    val modifiedArgs = remember { mutableStateOf(false) }
-    if (modified.value != m && !modifiedArgs.value) {
-        navController.currentBackStackEntry?.arguments?.putBoolean(Screen.m, modified.value)
-        modifiedArgs.value = true
+    val setModified = { n: Boolean ->
+        backStackEntry.arguments?.putBoolean("m", modified.value)
+        modified.value = n
     }
+    arrayOf(resultRecipient, resultRecipient2, resultRecipient3).forEach { it.onResult(setModified) }
 
     Scaffold(
         topBar = {
             ThemerAppBar(
-                navController = navController,
+                navigator,
                 title = R.string.theme_editor,
                 back = true,
             )
@@ -51,8 +63,7 @@ fun EditScreen(navController: NavController, themeIdx: Int, m: Boolean) {
         floatingActionButton = {
             if (modified.value) SaveButton {
                 theme.save()
-                modified.value = false
-                modifiedArgs.value = false
+                setModified(false)
             }
         },
     ) {
@@ -116,7 +127,7 @@ fun EditScreen(navController: NavController, themeIdx: Int, m: Boolean) {
                 )
                 ListItem(
                     text = { Text(stringResource(R.string.custom_values)) },
-                    modifier = Modifier.clickable { navController.navigate("editor/${themeIdx}/custom-values/${modified.value}") },
+                    modifier = Modifier.clickable { navigator.navigate(EditCustomValuesScreenDestination(themeIdx, modified.value)) },
                 )
                 ListItem(
                     text = {
@@ -128,13 +139,13 @@ fun EditScreen(navController: NavController, themeIdx: Int, m: Boolean) {
                         )
                     },
                     modifier = if (!xposedEnabled || disabledPref.get()) Modifier.clickable {
-                        navController.navigate("editor/${themeIdx}/colors/${modified.value}")
+                        navigator.navigate(EditColorsScreenDestination(themeIdx, modified.value))
                     } else Modifier,
                 )
                 ListItem(
                     text = { Text(stringResource(R.string.drawable_colors)) },
                     secondaryText = { Text(stringResource(R.string.drawable_colors_summary)) },
-                    modifier = Modifier.clickable { navController.navigate("editor/${themeIdx}/drawable-colors/${modified.value}") },
+                    modifier = Modifier.clickable { navigator.navigate(EditDrawableColorsScreenDestination(themeIdx, modified.value)) },
                 )
             }
         }
