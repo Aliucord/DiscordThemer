@@ -52,13 +52,15 @@ class AttrsReplacer(res: Resources, packageName: String, advanced: Boolean, json
 
     fun replaceAttrs() {
         if (map.isEmpty()) return
-        val resolveAttr = Resources.Theme::class.java.getDeclaredMethod("resolveAttribute",
-            Int::class.javaPrimitiveType, TypedValue::class.java, Boolean::class.javaPrimitiveType)
+        val resolveAttr = Resources.Theme::class.java.getDeclaredMethod(
+            "resolveAttribute",
+            Int::class.javaPrimitiveType, TypedValue::class.java, Boolean::class.javaPrimitiveType
+        )
         XposedBridge.hookMethod(resolveAttr, object : XC_MethodHook() {
             override fun afterHookedMethod(param: MethodHookParam) {
                 val attr = param.args[0] as Int
                 if (map.containsKey(attr))
-                        (param.args[1] as TypedValue).data = map[attr]!!
+                    (param.args[1] as TypedValue).data = map[attr]!!
             }
         })
     }

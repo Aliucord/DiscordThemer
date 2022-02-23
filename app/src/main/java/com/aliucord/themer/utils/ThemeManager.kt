@@ -19,6 +19,7 @@ object ThemeManager {
 
         var json: JSONObject
         var failed = false
+
         init {
             try {
                 json = JSONObject(JSONTokener(file.readText()))

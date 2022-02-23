@@ -102,8 +102,8 @@ class Main : IXposedHookInitPackageResources, IXposedHookLoadPackage {
 
     private fun XResources.tintDrawable(packageName: String, drawable: String, color: Int) =
         setReplacement(packageName, "drawable", drawable, object : DrawableLoader() {
-            override fun newDrawable(res: XResources, id: Int)
-                = getDrawable(getIdentifier(drawable, "drawable", packageName), null).apply { setTint(color) }
+            override fun newDrawable(res: XResources, id: Int) =
+                getDrawable(getIdentifier(drawable, "drawable", packageName), null).apply { setTint(color) }
         })
 
     override fun handleLoadPackage(lpparam: XC_LoadPackage.LoadPackageParam) {

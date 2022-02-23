@@ -18,14 +18,16 @@ fun ThemerAppBar(
 ) {
     BaseThemerAppBar(
         title = { Text(stringResource(title)) },
-        navigationIcon = if (back) {{
-            IconButton(onClick = { navController.popBackStack() }) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null,
-                )
+        navigationIcon = if (back) {
+            {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                    )
+                }
             }
-        }} else null,
+        } else null,
         actions = actions,
     )
 }

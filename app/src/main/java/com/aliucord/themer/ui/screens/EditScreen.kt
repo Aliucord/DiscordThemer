@@ -122,7 +122,9 @@ fun EditScreen(navController: NavController, themeIdx: Int, m: Boolean) {
                     text = {
                         Text(
                             stringResource(R.string.colors),
-                            color = if (!xposedEnabled || disabledPref.get()) Color.Unspecified else MaterialTheme.colors.onBackground.copy(ContentAlpha.disabled),
+                            color = if (!xposedEnabled || disabledPref.get()) Color.Unspecified else MaterialTheme.colors.onBackground.copy(
+                                ContentAlpha.disabled
+                            ),
                         )
                     },
                     modifier = if (!xposedEnabled || disabledPref.get()) Modifier.clickable {

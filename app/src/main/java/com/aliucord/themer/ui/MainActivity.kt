@@ -7,19 +7,14 @@ import androidx.activity.compose.setContent
 import androidx.compose.animation.*
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.fragment.app.FragmentActivity
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.aliucord.themer.BuildConfig
+import androidx.navigation.compose.*
+import com.aliucord.themer.*
 import com.aliucord.themer.R
 import com.aliucord.themer.preferences.sharedPreferences
 import com.aliucord.themer.ui.theme.ThemerTheme
 import com.aliucord.themer.ui.theme.primaryColorDark
-import com.aliucord.themer.xposedEnabled
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 class MainActivity : FragmentActivity() {
